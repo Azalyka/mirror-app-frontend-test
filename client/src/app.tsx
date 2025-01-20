@@ -1,7 +1,14 @@
-import "normalize.css";
+import 'normalize.css'
+import Aside from './components/Aside/Aside'
+import PostList from './components/PostList/PostList'
 
 function App() {
-  return <h1>Hi dev!</h1>;
+	return (
+		<div>
+			<Aside />
+			<PostList />
+		</div>
+	)
 }
 
-export default App;
+export default App
