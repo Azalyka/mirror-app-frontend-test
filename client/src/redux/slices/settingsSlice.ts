@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface Settings {
+export interface Settings {
 	layout: {
 		current: string
 		params: {
@@ -15,10 +15,13 @@ interface Settings {
 const initialState: Settings = {
 	layout: {
 		current: 'grid',
-		params: { grid: { columns: 3, rows: 2 }, masonry: { columns: 2, rows: 3 } },
+		params: {
+			grid: { columns: 3, rows: 2 },
+			masonry: { columns: 2, rows: 3 },
+		},
 	},
 	template: 'default',
-	navigation: 'pagination',
+	navigation: 'load-more',
 }
 
 const settingsSlice = createSlice({

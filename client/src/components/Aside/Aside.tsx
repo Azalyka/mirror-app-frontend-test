@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../redux/rootState'
 import { updateSettings } from '../../redux/slices/settingsSlice'
 import { fetchSettings } from '../../utils/api'
+import './Aside.css'
 
 const Aside: React.FC = () => {
 	const dispatch = useDispatch()
@@ -14,10 +15,9 @@ const Aside: React.FC = () => {
 	}
 
 	return (
-		<div className='settings-panel'>
-			<h2>Текущие настройки</h2>
+		<div className='aside'>
+			<button onClick={handleUpdateSettings}>Обновить</button>
 			<pre>{JSON.stringify(settings, null, 2)}</pre>
-			<button onClick={handleUpdateSettings}>Обновить настройки</button>
 		</div>
 	)
 }
