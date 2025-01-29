@@ -2,18 +2,18 @@ import React from 'react'
 
 interface PostCardProps {
 	caption: string
-	likes: number
 	comments: number
 	date: string
-	userId: string
+	likes: number
+	user: { id: string; postId: string; username: string }
 }
 
 const PostCard: React.FC<PostCardProps> = ({
 	caption,
-	likes,
 	comments,
 	date,
-	userId,
+	likes,
+	user,
 }) => {
 	const formatDate = (dateString: string) => {
 		const dateObj = new Date(dateString)
@@ -32,7 +32,7 @@ const PostCard: React.FC<PostCardProps> = ({
 			<p>Лайков: {likes}</p>
 			<p>Комментариев: {comments}</p>
 			<p>Дата: {formatDate(date)}</p>
-			<p>Пользователь: {userId}</p>
+			<p>Пользователь: {user.username}</p>
 		</div>
 	)
 }

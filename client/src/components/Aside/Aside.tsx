@@ -1,17 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../redux/rootState'
-import { updateSettings } from '../../redux/slices/settingsSlice'
-import { fetchSettings } from '../../utils/api'
+import { resetCurrentPage } from '../../redux/slices/postsSlice'
+import { fetchSettings, updateSettings } from '../../redux/slices/settingsSlice'
+import { AppDispatch } from '../../redux/store'
 import './Aside.css'
 
 const Aside: React.FC = () => {
-	const dispatch = useDispatch()
+	const dispatch: AppDispatch = useDispatch()
 	const settings = useSelector((state: RootState) => state.settings)
 
+	useEffect(() => {
+		dispatch(fetchSettings())
+	}, [dispatch])
+
 	const handleUpdateSettings = async () => {
-		const newSettings = await fetchSettings()
-		dispatch(updateSettings(newSettings))
+		const resultAction = await dispatch(fetchSettings())
+		if (fetchSettings.fulfilled.match(resultAction)) {
+			dispatch(updateSettings(resultAction.payload))
+			dispatch(resetCurrentPage())
+		} else {
+			console.error('Failed to fetch settings:', resultAction.error)
+		}
 	}
 
 	return (
