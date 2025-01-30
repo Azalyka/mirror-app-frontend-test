@@ -33,7 +33,6 @@ const PostList: React.FC = () => {
 	}
 
 	const limit = getLimitPosts(settings)
-	console.log(limit)
 	const totalPosts = 100
 	const totalPages = Math.ceil(totalPosts / limit)
 
@@ -48,7 +47,6 @@ const PostList: React.FC = () => {
 	}
 
 	useEffect(() => {
-		console.log('UseEffect')
 		if (currentPage === 1 || settings.navigation === 'pagination') {
 			loadPosts()
 		} else if (settings.navigation === 'load-more') {

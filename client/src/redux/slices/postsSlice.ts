@@ -26,7 +26,6 @@ export const fetchForSetPosts = createAsyncThunk<
 	Post[],
 	{ page: number; limit: number }
 >('posts/fetchForSetPosts', async ({ page, limit }) => {
-	console.log('Fetching posts for set page:', page, 'limit:', limit)
 	const response = await fetch(`${API_BASE_URL}_page=${page}&_limit=${limit}`)
 	return await response.json()
 })
@@ -35,7 +34,6 @@ export const fetchForAddPosts = createAsyncThunk<
 	Post[],
 	{ page: number; limit: number }
 >('posts/fetchForAddPosts', async ({ page, limit }) => {
-	console.log('Fetching posts add for page:', page, 'limit:', limit)
 	const response = await fetch(`${API_BASE_URL}_page=${page}&_limit=${limit}`)
 	return await response.json()
 })
