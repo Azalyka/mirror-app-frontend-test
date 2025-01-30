@@ -6,14 +6,12 @@ import {
 	fetchForAddPosts,
 	fetchForSetPosts,
 	incrementPage,
-	setCurrentPage,
 } from '../../redux/slices/postsSlice'
 import { Settings } from '../../redux/slices/settingsSlice'
 import { AppDispatch } from '../../redux/store'
 import PostCard from '../PostCard/PostCard'
 import './PostList.css'
-
-const API_BASE_URL = 'http://localhost:4000/posts?_expand=user&'
+import { RenderPagination } from './RenderPagination'
 
 const PostList: React.FC = () => {
 	const dispatch: AppDispatch = useDispatch()
@@ -40,17 +38,27 @@ const PostList: React.FC = () => {
 	const totalPages = Math.ceil(totalPosts / limit)
 
 	const loadMorePosts = async () => {
-		dispatch(incrementPage())
-		await dispatch(fetchForAddPosts({ page: currentPage + 1, limit }))
+		// dispatch(incrementPage())
+		await dispatch(fetchForAddPosts({ page: currentPage, limit }))
+
+		// dispatch(incrementPage())
+		// await dispatch(fetchForAddPosts({ page: currentPage + 1, limit }))
 	}
 
 	const loadPosts = async () => {
-		await dispatch(fetchForSetPosts({ page: currentPage, limit }))
+		if (limit > 0) {
+			await dispatch(fetchForSetPosts({ page: currentPage, limit }))
+		}
 	}
 
 	useEffect(() => {
-		loadPosts()
-	}, [])
+		console.log('UseEffect')
+		if (currentPage === 1 || settings.navigation === 'pagination') {
+			loadPosts()
+		} else if (settings.navigation === 'load-more') {
+			loadMorePosts()
+		}
+	}, [currentPage, limit])
 
 	const postList: CSS.Properties = {
 		display: 'flex',
@@ -73,125 +81,6 @@ const PostList: React.FC = () => {
 		columnGap: '16px',
 	}
 
-	const renderPagination = () => {
-		const pages = []
-		const step = 5
-
-		pages.push(
-			<button
-				key={1}
-				onClick={() => dispatch(setCurrentPage(1))}
-				className={currentPage === 1 ? 'active' : ''}
-			>
-				1
-			</button>
-		)
-
-		if (totalPages <= 7) {
-			for (let i = 2; i <= totalPages; i++) {
-				pages.push(
-					<button
-						key={i}
-						onClick={() => dispatch(setCurrentPage(i))}
-						className={currentPage === i ? 'active' : ''}
-					>
-						{i}
-					</button>
-				)
-			}
-		} else {
-			if (currentPage <= 4) {
-				for (let i = 2; i <= 5; i++) {
-					pages.push(
-						<button
-							key={i}
-							onClick={() => dispatch(setCurrentPage(i))}
-							className={currentPage === i ? 'active' : ''}
-						>
-							{i}
-						</button>
-					)
-				}
-				pages.push(
-					<button
-						key='forward'
-						onClick={() => dispatch(setCurrentPage(currentPage + step))}
-					>
-						...
-					</button>
-				)
-			} else if (currentPage > 4 && currentPage < totalPages - 3) {
-				pages.push(
-					<button
-						key='back'
-						onClick={() => dispatch(setCurrentPage(currentPage - step))}
-					>
-						...
-					</button>
-				)
-				for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-					pages.push(
-						<button
-							key={i}
-							onClick={() => dispatch(setCurrentPage(i))}
-							className={currentPage === i ? 'active' : ''}
-						>
-							{i}
-						</button>
-					)
-				}
-				pages.push(
-					<button
-						key='forward'
-						onClick={() => dispatch(setCurrentPage(currentPage + step))}
-					>
-						...
-					</button>
-				)
-			} else {
-				pages.push(
-					<button
-						key='back'
-						onClick={() => dispatch(setCurrentPage(currentPage - step))}
-					>
-						...
-					</button>
-				)
-				for (let i = totalPages - 4; i <= totalPages; i++) {
-					pages.push(
-						<button
-							key={i}
-							onClick={() => dispatch(setCurrentPage(i))}
-							className={currentPage === i ? 'active' : ''}
-						>
-							{i}
-						</button>
-					)
-				}
-			}
-		}
-
-		if (
-			totalPages > 1 &&
-			!pages.some(page => page.key === totalPages.toString())
-		) {
-			pages.push(
-				<button
-					key={totalPages}
-					onClick={() => dispatch(setCurrentPage(totalPages))}
-					className={currentPage === totalPages ? 'active' : ''}
-				>
-					{totalPages}
-				</button>
-			)
-		}
-
-		return pages
-	}
-
-	if (!settings.layout.current) {
-		return <div>Загрузка</div>
-	}
 	return (
 		<div style={postList}>
 			<div
@@ -207,13 +96,21 @@ const PostList: React.FC = () => {
 			</div>
 
 			{settings.navigation === 'load-more' && (
-				<button onClick={loadMorePosts} className='load-more'>
+				// <button onClick={loadMorePosts} className='load-more'>
+				<button
+					onClick={() => {
+						dispatch(incrementPage())
+					}}
+					className='load-more'
+				>
 					Загрузить больше
 				</button>
 			)}
 
 			{settings.navigation === 'pagination' && (
-				<div className='pagination'>{renderPagination()}</div>
+				<div className='pagination'>
+					<RenderPagination totalPages={totalPages} />
+				</div>
 			)}
 		</div>
 	)

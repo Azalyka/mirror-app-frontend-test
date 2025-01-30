@@ -13,7 +13,7 @@ export interface Settings {
 	navigation: string
 }
 
-const initialState: Settings = {
+const initialState = {
 	layout: {
 		current: '',
 		params: {

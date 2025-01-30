@@ -64,12 +64,9 @@ const postsSlice = createSlice({
 	extraReducers: builder => {
 		builder
 			.addCase(fetchForAddPosts.fulfilled, (state, action) => {
-				console.log(action.payload)
-				// state.items = state.items.concat(action.payload)
-				state.items = action.payload
+				state.items = [...state.items, ...action.payload]
 			})
 			.addCase(fetchForSetPosts.fulfilled, (state, action) => {
-				console.log(action.payload)
 				state.items = action.payload
 			})
 	},
