@@ -38,11 +38,7 @@ const PostList: React.FC = () => {
 	const totalPages = Math.ceil(totalPosts / limit)
 
 	const loadMorePosts = async () => {
-		// dispatch(incrementPage())
 		await dispatch(fetchForAddPosts({ page: currentPage, limit }))
-
-		// dispatch(incrementPage())
-		// await dispatch(fetchForAddPosts({ page: currentPage + 1, limit }))
 	}
 
 	const loadPosts = async () => {
@@ -60,15 +56,6 @@ const PostList: React.FC = () => {
 		}
 	}, [currentPage, limit])
 
-	const postList: CSS.Properties = {
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		margin: '20px auto',
-		marginLeft: '250px',
-		paddingLeft: '20px',
-	}
-
 	const postListContainerGrid: CSS.Properties = {
 		display: 'grid',
 		gridTemplateColumns: `repeat(${settings.layout.params.grid.columns}, minmax(200px, 1fr))`,
@@ -82,7 +69,7 @@ const PostList: React.FC = () => {
 	}
 
 	return (
-		<div style={postList}>
+		<div className='post-list-overlay'>
 			<div
 				style={
 					currentLayout === 'grid'
@@ -91,12 +78,11 @@ const PostList: React.FC = () => {
 				}
 			>
 				{posts.map(post => (
-					<PostCard key={post.id} {...post} />
+					<PostCard key={post.id} {...post} template={settings.template} />
 				))}
 			</div>
 
 			{settings.navigation === 'load-more' && (
-				// <button onClick={loadMorePosts} className='load-more'>
 				<button
 					onClick={() => {
 						dispatch(incrementPage())

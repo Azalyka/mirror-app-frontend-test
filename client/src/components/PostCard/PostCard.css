@@ -1,0 +1,40 @@
+.post-card {
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	padding: 16px;
+	background-color: #fff;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	margin-bottom: 16px;
+}
+
+.post-card h3 {
+	margin: 0 0 8px 0;
+	font-size: 1.2rem;
+}
+
+.post-card .username {
+	font-weight: bold;
+	margin: 0;
+}
+
+.post-card .date {
+	color: #666;
+	margin: 4px 0;
+}
+
+.post-card .divider {
+	border: 0;
+	border-top: 1px solid #ddd;
+	margin: 8px 0;
+}
+
+.post-card .stats {
+	display: flex;
+	gap: 16px;
+	margin-top: 8px;
+}
+
+.post-card .stats span {
+	font-size: 0.9rem;
+	color: #666;
+}

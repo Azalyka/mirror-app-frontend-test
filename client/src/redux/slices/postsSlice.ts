@@ -49,7 +49,6 @@ const postsSlice = createSlice({
 		},
 		addPosts(state, action: PayloadAction<Post[]>) {
 			state.items = [...state.items, ...action.payload]
-			// state.items = state.items.concat(action.payload)
 		},
 		setCurrentPage(state, action: PayloadAction<number>) {
 			state.currentPage = action.payload

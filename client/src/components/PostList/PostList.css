@@ -1,11 +1,10 @@
-.post-list {
+.post-list-overlay {
+	overflow-y: auto;
+	padding: 20px;
+	min-width: 0;
 	display: flex;
-	flex-direction: column;
 	align-items: center;
-	margin: 20px auto;
-	margin-left: 250px;
-	width: calc(100% - 250px);
-	padding-left: 20px;
+	flex-direction: column;
 }
 
 .post-list-container.grid {

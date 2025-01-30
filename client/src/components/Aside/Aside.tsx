@@ -26,8 +26,72 @@ const Aside: React.FC = () => {
 
 	return (
 		<div className='aside'>
-			<button onClick={handleUpdateSettings}>Обновить</button>
-			<pre>{JSON.stringify(settings, null, 2)}</pre>
+			<button className='btn-update' onClick={handleUpdateSettings}>
+				Обновить
+			</button>
+
+			<div className='settings-form'>
+				<div className='form-group'>
+					<label>Шаблон (макет):</label>
+					<input
+						type='text'
+						value={
+							settings.layout.current === 'grid' ? 'Сетка' : 'Плиточная верстка'
+						}
+						readOnly
+					/>
+				</div>
+
+				<div className='form-group'>
+					<label>Карточка:</label>
+					<input
+						type='text'
+						value={
+							settings.template === 'Classic' ? 'Классическая' : 'Наведения'
+						}
+						readOnly
+					/>
+				</div>
+
+				<div className='form-group'>
+					<label>Навигация:</label>
+					<input
+						type='text'
+						value={
+							settings.navigation === 'pagination'
+								? 'Пагинация'
+								: 'Кнопка "Загрузить больше"'
+						}
+						readOnly
+					/>
+				</div>
+
+				<div className='form-group'>
+					<label>Колонок:</label>
+					<input
+						type='text'
+						value={
+							settings.layout.current === 'grid'
+								? settings.layout.params.grid.columns
+								: settings.layout.params.masonry.columns
+						}
+						readOnly
+					/>
+				</div>
+
+				<div className='form-group'>
+					<label>Рядов:</label>
+					<input
+						type='text'
+						value={
+							settings.layout.current === 'grid'
+								? settings.layout.params.grid.rows
+								: settings.layout.params.masonry.rows
+						}
+						readOnly
+					/>
+				</div>
+			</div>
 		</div>
 	)
 }
